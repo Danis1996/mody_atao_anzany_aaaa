@@ -10,20 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_081804) do
+ActiveRecord::Schema.define(version: 2019_09_10_115401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "clubs", force: :cascade do |t|
+    t.bigint "recruiter_id"
+    t.bigint "quarter_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["quarter_id"], name: "index_clubs_on_quarter_id"
+    t.index ["recruiter_id"], name: "index_clubs_on_recruiter_id"
+  end
+
+  create_table "quarters", force: :cascade do |t|
+    t.string "zip_code"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.bigint "quarter_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "role"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "age"
+    t.text "skills"
+    t.string "quarter"
+    t.string "gender"
+    t.string "pseudonym"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["quarter_id"], name: "index_users_on_quarter_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
